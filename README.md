@@ -11,7 +11,6 @@ This is a sample app that uses Android Architecture Components with Dagger 2.
 * [Dagger 2][dagger2] for dependency injection
 * [Retrofit][retrofit] for REST api communication
 * [Glide][glide] for image loading
-* [Timber][timber] for logging
 * [mockito][mockito] for mocking in tests
 
 
