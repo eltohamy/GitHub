@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="state"
+            type="io.mbition.githubui.user.UserDetailsViewState"/>
+
+        <variable
+            name="viewModel"
+            type="io.mbition.githubui.user.UserDetailsViewModel"/>
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:context="ui.activities.UserDetailsActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:visibleOrGone="@{state.user == null}">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                app:visibleWhileLoading="@{state.userDetails}"/>
+
+            <TextView
+                android:id="@+id/no_results_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/no_user_details_found"
+                android:textSize="18sp"
+                app:errorMessage="@{state.userDetails}"
+                app:gone="@{state.user != null}"
+                app:visibleOnError="@{state.userDetails}"/>
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/app_bar_layout_transparent"
+            app:user="@{state.user}"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:fillViewport="true"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:visibleOrGone="@{state.user != null}">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="@dimen/default_margin"
+                android:gravity="start"
+                android:text="@string/repositories"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/no_repositories_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/no_repositories_found"
+                android:textSize="18sp"
+                app:gone="@{state.repos.size > 0}"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/reposRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                app:layoutManager="LinearLayoutManager"
+                app:visible="@{state.repos.size > 0}"
+                tools:listitem="@layout/row_repo"/>
+
+
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

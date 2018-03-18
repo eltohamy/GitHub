@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="io.mbition.github.ui.users.UsersViewModel" />
+
+        <variable
+            name="state"
+            type="io.mbition.github.ui.users.UsersViewState" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="io.mbition.github.ui.users.UsersFragment">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:refreshingWhileLoading="@{state.usersData}">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/usersRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                app:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/row_user" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/no_results_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/no_users_found"
+            android:textSize="18sp"
+            app:errorMessage="@{state.usersData}"
+            app:visibleOnError="@{state.usersData}" />
+
+    </FrameLayout>
+</layout>
